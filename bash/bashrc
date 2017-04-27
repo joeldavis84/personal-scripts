@@ -1,0 +1,14 @@
+# .bashrc
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias ll='ls -lh'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+  ## Errors are suppressed is it's an expected occassionally and this is a simple command
+tmux attach -t login 2>/dev/null || tmux new -s login
