@@ -1,14 +1,25 @@
-""" Shortcuts
+  """ General Usability features
+set modeline
+set tags=tags;
+execute pathogen#infect()
+autocmd FileType python setlocal completeopt-=preview
+let g:jedi#popup_on_dot = 0
+
+  """ Shortcuts
 nnoremap <C-Down> <C-W><C-J>
 nnoremap <C-Up> <C-W><C-K>
 nnoremap <C-Right> <C-W><C-L>
 nnoremap <C-Left> <C-W><C-H>
 
-""" General Styling
-"colorscheme torte
+  """ Tab Configuration
+filetype plugin indent off
+set tabstop=2
+set expandtab
+
+  """ General Styling
 colorscheme molokai
 
-""" Calculate Statusline and show it.
+  """ Calculate Statusline and show it.
 let g:randomNumber = system("echo $RANDOM | tr -d '\n'") % 5
 let gitBranch = system("git branch | egrep '^*' | tr -d '\n' | tr -d '*' | tr -d ' '")
 
