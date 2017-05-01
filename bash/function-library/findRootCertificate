@@ -1,0 +1,56 @@
+
+  ## echo's out the base64 encode of the root certificate for a given SSL/TLS server. Do with that what thy will.
+findRootCertificate(){
+
+  connectPath=$1
+  tmpDir="/tmp/ssl-recon.$RANDOM"
+
+    ## If a port wasn't specified at invocation, assume tcp/443
+  echo $connectPath | grep : >/dev/null
+  if [[ $? -ne 0 ]]; then
+    connectPath="${connectPath}:443"
+  fi
+
+  mkdir -p $tmpDir 2>/dev/null
+
+    ## Capture nothing but the entire cert chain
+  echo | openssl s_client -showcerts -connect $connectPath 2>/dev/null | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > ${tmpDir}/certs
+
+  csplit -qzf ${tmpDir}/root-cert-hunt ${tmpDir}/certs /BEGIN/ {*}
+
+    ## See if we get off easy by the CA being self-signed.
+  for certFile in ${tmpDir}/root-cert-hunt*; do
+
+    openssl x509 -in $certFile -text | egrep '^[ \t]* (Issuer|Subject):' \
+            | sed -e 's/^[ \t]* Issuer://g' -e 's/^[ \t]* Subject://g' | uniq -c | head -1 | awk '{print $1}' > ${tmpDir}/self-signed-count
+
+      ## The same subject showing up twice indicates that this is a self-signed certificate
+    if [[ "$(cat ${tmpDir}/self-signed-count)" == "2" ]]; then
+      cat $certFile
+      return
+    fi
+
+  done 
+
+    ## Otherwise we need to find an Issuer that is not one of the subjects. First enumerate all subjects:  
+  for certFile in ${tmpDir}/root-cert-hunt*; do
+
+    openssl x509 -in $certFile -text | egrep '^[ \t]* Subject:' | sed 's/^[ \t]* Subject://g' >> ${tmpDir}/subjects
+
+  done
+
+    ## Iterate over each certifcate until we find an issuer that isn't in the subjects list (implying a start of trust)
+  for certFile in ${tmpDir}/root-cert-hunt*; do
+    grep "$(openssl x509 -in $certFile -text | egrep '^[ \t]* Issuer:' | sed 's/^[ \t]* Issuer://g')" ${tmpDir}/subjects >/dev/null
+    if [[ $? -ne 0 ]]; then
+      cat $certFile
+      return
+    fi
+  done
+
+  echo "Couldn't find one...whoops"
+
+    ## Clean up
+  rm -rf $tmpDir
+
+}
