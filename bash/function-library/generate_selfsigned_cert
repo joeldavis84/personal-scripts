@@ -3,7 +3,7 @@ generate_selfsigned_cert(){
   fileName="/var/tmp/self-signed-cert-${RANDOM}"
 
   openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:4096 -keyout ${fileName}.key -out ${fileName}.pem \
-    -subj '/C=US/ST=North Carolina/L=Durham/O=SomeOrg/OU=SomeDepartment/CN=localhost/emailAddress=someone@somewhere.com'
+    -subj '/C=US/ST=North Carolina/L=Durham/O=SomeOrg/OU=SomeDepartment/CN=localhost/emailAddress=someone@somewhere.com' >${fileName}.log 2>&1
  
    echo $fileName
  
