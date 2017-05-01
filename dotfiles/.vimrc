@@ -59,7 +59,7 @@ elseif randomNumber == 4
 
 endif
 
-set laststatus=1
+set laststatus=2
 set statusline=%y%{statusLineText}
 
   """ Template Configuration
