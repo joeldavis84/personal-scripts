@@ -1,0 +1,4 @@
+# Not hugely complicated, just useful behavior
+
+set completion-ignore-case On
+set mark-directories On
