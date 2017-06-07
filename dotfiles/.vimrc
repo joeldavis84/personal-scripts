@@ -19,6 +19,10 @@ set expandtab
   """ General Styling
 colorscheme molokai
 
+""" Remove trailing whitespace in the entire document                                                                                                                                                                                         
+command Noblank :%s/[ \t]*$//g | :nohl                                                                                                                                                                                                        
+map [[ :Noblank<CR> 
+
   """ Calculate Statusline and show it.
 let g:randomNumber = system("echo $RANDOM | tr -d '\n'") % 5
 let gitBranch = system("git branch | egrep '^*' | tr -d '\n' | tr -d '*' | tr -d ' '")
