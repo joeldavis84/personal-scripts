@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-  ## Tab complete for hostnames based on the contents of the user's known_hosts file
+  ## Table completion for known hosts
 _sshHost(){
 
   local currentWord previousWord possibleWords hasAt isOption
@@ -15,7 +15,7 @@ _sshHost(){
 
     ## If they've already typed a @ in this word we can be pretty sure what follows is a host
   echo $currentWord | egrep '@' > /dev/null && hasAt=1
-  #echo $currentWord | egrep '^-' > /dev/null && isOption=1
+  echo $currentWord | egrep '^-' > /dev/null && isOption=1
 
   if [[ "x$hasAt" == "x1" ]]; then
 
@@ -45,6 +45,5 @@ _sshHost(){
 
 }
 
-complete -F _sshHost ssh
-complete -F _sshHost scp
-
+complete -o default -F _sshHost ssh
+complete -o default -F _sshHost scp
