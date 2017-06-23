@@ -1,0 +1,50 @@
+#!/bin/bash 
+
+  ## Tab complete for hostnames based on the contents of the user's known_hosts file
+_sshHost(){
+
+  local currentWord previousWord possibleWords hasAt isOption
+
+  COMPREPLY=()
+  hasAt=0
+  isOption=0
+
+  knownHosts=$(awk '{print $1}' $HOME/.ssh/known_hosts | cut -f1 -d, | tr '\n' ' ')
+  currentWord="${COMP_WORDS[COMP_CWORD]}"
+  previousWord="${COMP_WORDS[COMP_CWORD-1]}"
+
+    ## If they've already typed a @ in this word we can be pretty sure what follows is a host
+  echo $currentWord | egrep '@' > /dev/null && hasAt=1
+  #echo $currentWord | egrep '^-' > /dev/null && isOption=1
+
+  if [[ "x$hasAt" == "x1" ]]; then
+
+    userPortion=$(echo $currentWord | cut -f1 -d@ )
+    hostPortion=$(echo $currentWord | cut -f2 -d@ )
+
+  else
+
+    userPortion=""
+    hostPortion="${currentWord}"
+
+  fi
+
+    ## Generate autocompletes
+  COMPREPLY=( $(compgen -W "${knownHosts}" -- ${hostPortion}) )
+
+    ## If autocompletes were found tack it back on before returning to the user
+  for currentIndex in ${!COMPREPLY[@]}; do
+
+    if [[ -n "${COMPREPLY[$currentIndex]}" ]] && [[ -n "${userPortion}" ]]; then
+
+      COMPREPLY[$currentIndex]="${userPortion}@${COMPREPLY[$currentIndex]}"
+
+    fi
+
+  done
+
+}
+
+complete -F _sshHost ssh
+complete -F _sshHost scp
+
