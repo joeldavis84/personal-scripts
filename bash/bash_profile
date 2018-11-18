@@ -1,0 +1,35 @@
+createPrompt(){
+  
+  git log -1 >/dev/null 2>&1
+
+  if [[ $? -eq 0 ]]; then
+
+    extraString=""
+    currentBranch="$(git branch|grep '*'| awk '{print $NF}')"
+    untrackedAndChanged="$(git status -s | wc -l)"
+    dirtyMarker=""
+
+    if [[ $untrackedAndChanged -ne 0 ]]; then
+      dirtyMarker='*'
+    fi
+
+    extraString=" (${currentBranch}${dirtyMarker})"
+
+  else
+
+    extraString=""
+
+  fi
+
+  PS1="👤 \e[1;92m\u \w${extraString}>\e[0m "
+}
+
+PROMPT_COMMAND=createPrompt
+
+export PATH="$PATH:$HOME/bin"
+
+alias ll="ls -l"
+
+if [[ ! -z "$GNOME_TERMINAL_SCREEN" ]] && [[ -z "$TMUX" ]]; then
+  exec tmux -2 new-session -As 'default'
+fi
