@@ -1,4 +1,8 @@
-# Not hugely complicated, just useful behavior
+ ## Tweaking autocomplete behavior
 
 set completion-ignore-case On
 set mark-directories On
+
+  ## Setup some "ALT+" macros
+"\eu": "\C-eJoel Davis"
+"\ee": "\C-ejoel@<redacted>"
