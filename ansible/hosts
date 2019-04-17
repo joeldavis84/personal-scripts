@@ -1,0 +1,10 @@
+
+[personal]
+rascaldev.io
+build.rascaldev.io
+git.rascaldev.io
+
+[kube]
+kube-worker01
+kube-worker02
+kube-control01
