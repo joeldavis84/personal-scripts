@@ -1,3 +1,5 @@
+.PHONY: all clean
+
 platform = $(shell /usr/bin/lsb_release -is)
 
 ifeq (${platform}, Ubuntu)

@@ -1,4 +1,4 @@
-.PHONY: ansible all
+.PHONY: ansible all clean
 
 ansible:
 	make -C ansible
