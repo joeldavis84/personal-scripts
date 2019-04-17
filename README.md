@@ -1,0 +1,1 @@
+These are my personal scripts. Probably only useful to others to peruse and extract snippets. There a simplistic install phase based off GNU `make` here which should be ran as the user you wish to setup. Again these are personal scripts so that's probably not useful but I mention it so it's easier to figure out what's what.
