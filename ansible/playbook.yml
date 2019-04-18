@@ -1,0 +1,16 @@
+---
+- name: Populate dotfiles
+  hosts: localhost
+  tasks:
+  - name: Populate inputrc
+    copy:
+      src: "../dotfiles/inputrc"
+      dest: "{{ lookup('env','HOME') }}/.inputrc"
+  - name: Populate ssh Client Configuration
+    copy:
+      src: "../dotfiles/ssh_client_config"
+      dest: "{{ lookup('env', 'HOME') }}/.ssh/config"
+  - name: Populate vim directory
+    copy:
+      src: "../dotfiles/vimdir/"
+      dest: "{{ lookup('env', 'HOME') }}/.vim"
