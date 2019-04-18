@@ -1,9 +1,6 @@
   """ General Usability features
 set modeline
 set tags=tags;
-execute pathogen#infect()
-autocmd FileType python setlocal completeopt-=preview
-let g:jedi#popup_on_dot = 0
 
   """ Shortcuts
 nnoremap <C-Down> <C-W><C-J>
@@ -16,15 +13,11 @@ filetype plugin indent off
 set tabstop=2
 set expandtab
 
-  """ General Styling
-colorscheme molokai
-
 """ Remove trailing whitespace in the entire document                                                                                                                                                                                         
 command Noblank :%s/[ \t]*$//g | :nohl                                                                                                                                                                                                        
 map [[ :Noblank<CR> 
 
   """ Calculate Statusline and show it.
-let g:randomNumber = system("echo $RANDOM | tr -d '\n'") % 5
 let gitBranch = system("git branch | egrep '^*' | tr -d '\n' | tr -d '*' | tr -d ' '")
 
   """ Add filename
@@ -38,28 +31,6 @@ if strlen(gitBranch)
 else
 
   let statusLineText .= "(gitless) "
-
-endif
-
-if randomNumber == 0
-
-  let statusLineText .= "George Lucas did nothing wrong."
-
-elseif randomNumber == 1
-
-  let statusLineText .= "I know some things."
-
-elseif randomNumber == 2
-
-  let statusLineText .= "Yeah, Magnets!"
-
-elseif randomNumber == 3
-
-  let statusLineText .= "Wubba lubba dub duuub!!"
-
-elseif randomNumber == 4
-
-  let statusLineText .= "Seriously, George Lucas did nothing wrong"
 
 endif
 
