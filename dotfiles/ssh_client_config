@@ -4,3 +4,28 @@ ConnectTimeout 5
 ForwardX11 yes
 RekeyLimit 1M 300
 ServerAliveInterval 60
+
+Match Host build.rascaldev.io
+  User jad87
+
+Match Host build
+  HostName build.rascaldev.io
+  User jad87
+
+Match Host git
+  HostName git.rascaldev.io
+
+Match Host joelspi01
+  User pi
+
+Match Host kube-*
+  User jad87
+
+Match Host rascaldev.io
+  User jad87
+
+Match Host irc
+  HostName rascaldev.io
+  User bratchley
+
+# vim: syntax=sshconfig
