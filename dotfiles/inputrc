@@ -4,6 +4,10 @@ set completion-ignore-case On
 set mark-directories On
 
   ## Setup some "ALT+" macros
+  ## CTRL-e :: Bashism for "go to end of line"
+  ## CTRL-u :: Bashism for "cut line after cursor to clipboard"
+  ## \e :: used to map the escape key, also catches ALT key presses, more info: https://unix.stackexchange.com/a/543341/34520
+
 "\eu": "\C-eJoel Davis"
 "\ee": "\C-ejoel@<redacted>"
-"\er": "\C-a\C-k\C-ereset\n"
+"\er": "\C-e\C-ureset\n"
