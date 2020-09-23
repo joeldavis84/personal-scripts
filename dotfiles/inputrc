@@ -6,3 +6,4 @@ set mark-directories On
   ## Setup some "ALT+" macros
 "\eu": "\C-eJoel Davis"
 "\ee": "\C-ejoel@<redacted>"
+"\er": "\C-a\C-k\C-ereset\n"
